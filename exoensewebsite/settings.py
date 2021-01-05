@@ -83,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'incomeexpensesdb',
         'USER':'postgres',
-        'PASSWORD' : 'Mahmoudmostafa23',
+        'PASSWORD' : '#',
         'HOST':'localhost',
     }
 }
@@ -152,12 +152,8 @@ ACCOUNT_EMAIL_UNIQUE = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'mmbahget@gmail.com'
-EMAIL_HOST_PASSWORD = 'gtpdmguepjqhnegw'
+EMAIL_HOST_USER = '#'
+EMAIL_HOST_PASSWORD = '#'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-DEFAULT_FORM_EMAIL = 'mahmoodbebo.mb@gmail.com'
-
-"""
-if DEBUG:
-    EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'"""
+DEFAULT_FORM_EMAIL = '#'
