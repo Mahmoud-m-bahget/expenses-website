@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 import django_heroku
+from django.contrib import messages
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -39,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'expenses',
     'authentication',
+    'userpreferences',
+    'userincome',
 ]
 
 MIDDLEWARE = [
@@ -137,3 +140,24 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR,'exoensewebsite/static')]
 STATIC_ROOT = os.path.join(BASE_DIR,'static')
 django_heroku.settings(locals())
+
+MESSAGE_TAGS = {
+    messages.ERROR:'danger'
+}
+
+
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_EMAIL_UNIQUE = True
+
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'mmbahget@gmail.com'
+EMAIL_HOST_PASSWORD = 'gtpdmguepjqhnegw'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+DEFAULT_FORM_EMAIL = 'mahmoodbebo.mb@gmail.com'
+
+"""
+if DEBUG:
+    EMAIL_BACKEND = 'django.core.mail.backends.dummy.EmailBackend'"""
