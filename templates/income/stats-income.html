@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<div class="container mt-4">
+{% include 'partials/_messages.html' %}
+
+    <div class="row">
+        <div class="col-md-10">
+            <nav aria-label="breadcrumb ">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'expenses' %}">Expenses Summary</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Summry</li>
+                </ol>
+            </nav>
+        </div>
+        <div class="col-md-2">
+            <a href="{% url 'expenses' %}" class="btn btn-primary">BACK</a>
+        </div>
+    </div>
+    <canvas id="myChart" width="400" height="300"></canvas>
+</div>
+<script src="{% static 'js/stats-income.js'%}"></script>
+
+
+
+{% endblock content %}

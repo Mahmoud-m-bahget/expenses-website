@@ -17,6 +17,7 @@ from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
 import threading
 
+
 class EmailThread(threading.Thread):
     def __init__(self, email):
         self.email = email
@@ -35,6 +36,7 @@ class UsernameValidationView(View):
         if User.objects.filter(username=username).exists():
             return JsonResponse({'username_error':'sorry username is in use, chose another one'},status=409)
         return JsonResponse({'username_valid':True})      
+
 
 class EmailValidationView(View):
     def post(self,request):

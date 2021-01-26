@@ -22,7 +22,21 @@
            {% if expenses.count %}
 
             <div class="row">
-                <div class="col-md-8"></div>
+                <div class="col-md-8">
+                    <div class="row">
+
+                        <div class="col-md-4">
+                            <a href="{% url 'export-scv' %}" class="btn btn-secondary">Export CSV</a>
+
+                        </div>
+                        <div class="col-md-4">
+                            <a href="{% url 'export-excel' %}" class="btn btn-success">Export Excel</a>
+                        </div>
+                        
+                    </div>
+                            
+
+                </div>
                 <div class="col-md-4">
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search" id="searchField">

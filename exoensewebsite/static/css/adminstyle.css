@@ -1,0 +1,14 @@
+#header {
+    background: #30393d;
+    color: rgb(255, 255, 255);
+}
+
+#branding h1 {    
+    color: #ffffff;
+}
+
+.module h2, .module caption, .inline-group h2 {
+   
+    background:  #30393d;
+    
+}

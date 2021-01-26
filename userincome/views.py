@@ -5,8 +5,12 @@ from userpreferences.models import UserPreferences
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 import json
-from django.http import JsonResponse
+from django.http import JsonResponse ,HttpResponse
 from userpreferences.models import UserPreferences
+import datetime
+import csv
+import xlwt
+
 
 
 # Create your views here.
@@ -133,3 +137,74 @@ def delete_income(request,id):
     income.delete()
     messages.success(request,'Record removed')
     return redirect('income')
+
+
+
+
+def income_source_summary(request):
+    todays_date = datetime.date.today()
+    six_month_ago= todays_date-datetime.timedelta(days=30*6)
+    income = UserIncome.objects.filter(owner=request.user ,date__gte= six_month_ago,date__lte=todays_date)
+    finalrep = {}
+
+    def get_sourse(income):
+        return income.source
+    def get_income_amount(source):
+        amount = 0
+        filter_by_source = income.filter(source=source)
+        for item in filter_by_source:
+            amount+=item.amount
+        return amount
+    source_list=  list(set(map(get_sourse,income)))
+    for x in income:
+        for y in source_list:
+            finalrep[y]=get_income_amount(y)
+    return JsonResponse({'income_source_data':finalrep},safe=False)
+
+def stat_view(request):
+    return render (request,'income/stats-income.html')
+
+
+
+
+def export_scv(request):
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition']='attachment; filename=Income'+str(datetime.datetime.now())+'.csv' 
+
+    writer = csv.writer(response)
+    writer.writerow(['Amount','Description','category','Date'])
+    income = UserIncome.objects.filter(owner = request.user)
+    for inc in income:
+        writer.writerow([inc.amount,inc.description,inc.source,inc.date])
+    
+    return response
+
+
+
+
+
+def export_excel_income(request):
+    response = HttpResponse(content_type='application/ms-excel')
+    response['Content-Disposition']='attachment; filename=Income'+str(datetime.datetime.now())+'.xls' 
+    wb = xlwt.Workbook(encoding='utf-8')
+    ws = wb.add_sheet('Income')
+    row_num = 0
+    font_style = xlwt.XFStyle()
+    font_style.font.bold = True
+
+    columns = ['Amount','Description','Source','Date']
+    for col_num in range(len((columns))):
+        ws.write(row_num,col_num,columns[col_num],font_style)
+    
+    font_style=xlwt.XFStyle()
+
+    rows=UserIncome.objects.filter(owner= request.user).values_list('amount','description','source','date')
+
+    for row in rows:
+        row_num+=1
+        for col_num in range(len(row)):
+            ws.write(row_num,col_num,str(row[col_num]),font_style)
+        
+    wb.save(response)
+    return response

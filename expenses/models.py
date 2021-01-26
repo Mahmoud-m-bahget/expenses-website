@@ -4,7 +4,6 @@ from django.utils.timezone import now
 
 # Create your models here.
 
-
 class Expenses(models.Model):
     amount = models.FloatField()
     date = models.DateField(default=now)
